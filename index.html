@@ -1,0 +1,64 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Oswald"
+    />
+    <style>
+      h2 {
+        font-family: "Oswald";
+        background-color: rgb(252, 230, 200);
+      }
+
+      body {
+        font-family: "Open Sans";
+        background-color: rgb(230, 250, 240);
+      }
+    </style>
+    <title>Plain HTML Sandbox</title>
+  </head>
+  <body>
+    <div id="app">
+      <h2>Online Memo</h2>
+      <br />
+      Logged in as
+      <input
+        v-model.trim="username"
+        @keyup.enter="updateUser"
+        placeholder="Add username"
+      /><br />
+      <br />
+      <span>
+        Note: In order to edit the text, please log in using the correct
+        username
+      </span>
+      <br />
+      <br />
+      <input
+        v-model.trim="newTodoText"
+        @keyup.enter="addTodo"
+        placeholder="Add new todo"
+      />
+      <button @click="addTodo">Add</button>
+      <ul>
+        <li v-for="todo in todos">
+          <span v-if="username!==todo.username">{{todo.text}}</span>
+          <input
+            v-if="username==todo.username"
+            :value="todo.text"
+            @input="updateTodoText(todo, $event.target.value)"
+          />
+          <button v-if="username==todo.username" @click="removeTodo(todo)">
+            X
+          </button>
+          by {{todo.username}}
+        </li>
+      </ul>
+    </div>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://gstatic.com/firebasejs/4.2.0/firebase.js"></script>
+    <script src="https://unpkg.com/vuefire/dist/vuefire.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
